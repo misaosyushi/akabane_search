@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from "vuex";
-import './plugins/vuetify'
+import '@/plugins/vuetify'
+import '@/assets/main.css'
 import App from './App.vue'
 import '@babel/polyfill';
 import store from '@/store/index';

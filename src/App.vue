@@ -1,6 +1,10 @@
 <template>
   <v-app>
-    <v-toolbar app>
+    <v-toolbar 
+      app
+      color="cyan"
+      dark
+    >
       <v-toolbar-title class="headline text-uppercase">
         <span class="font-weight-light" v-text="mainTitle"></span>
         <span v-text="subTitle"></span>
@@ -14,12 +18,10 @@
 </template>
 
 <script>
-// import IzakayaList from '@/views/IzakayaList.vue'
 
 export default {
   name: 'App',
   components: {
-    // IzakayaList
   },
   data () {
     return {
