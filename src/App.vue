@@ -2,28 +2,29 @@
   <v-app>
     <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span class="font-weight-light">AKABANE NO </span>
-        <span>IZAKAYA♡</span>
+        <span class="font-weight-light" v-text="mainTitle"></span>
+        <span v-text="subTitle"></span>
       </v-toolbar-title>
     </v-toolbar>
 
     <v-content>
-      <HelloWorld/>
+      <router-view/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+// import IzakayaList from '@/views/IzakayaList.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    // IzakayaList
   },
   data () {
     return {
-      //
+      mainTitle: "AKABANE NO ",
+      subTitle: "IZAKAYA"
     }
   }
 }
