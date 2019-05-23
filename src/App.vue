@@ -2,7 +2,7 @@
   <v-app>
     <v-toolbar 
       app
-      color="cyan"
+      color="primary"
       dark
     >
       <v-toolbar-title class="headline text-uppercase">
@@ -21,8 +21,6 @@
 
 export default {
   name: 'App',
-  components: {
-  },
   data () {
     return {
       mainTitle: "AKABANE NO ",

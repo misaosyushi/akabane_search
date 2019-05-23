@@ -17,6 +17,7 @@
 
             <v-list-tile
               :key="item.name"
+              :href="item.url"
               avatar
               @click="test"
             >
@@ -27,13 +28,24 @@
               <v-list-tile-content>
                 <v-list-tile-title v-html="item.name"></v-list-tile-title>
                 <v-list-tile-sub-title v-html="item.mobileAccess"></v-list-tile-sub-title>
-                <v-list-tile-sub-title v-html="item.address"></v-list-tile-sub-title>
+                <v-list-tile-sub-title v-html="item.catch"></v-list-tile-sub-title>
+                
               </v-list-tile-content>
             </v-list-tile>
           </template>
         </v-list>
 
         </v-card>
+
+        <div class="text-xs-center pt-2">
+            <v-pagination
+                color="primary"
+                :value="currentPage"
+                :length="totalPage"
+                @input="pageTransition"
+            />
+        </div>
+
         </v-flex>
     </v-layout>
   </v-container>
@@ -62,8 +74,9 @@ import { mapGetters, mapActions } from 'vuex';
     methods: {
         ...mapActions('izakaya',{
         }),
-        test () {
-
+        test() {
+        },
+        pageTransition() {
         }
     }
   }
