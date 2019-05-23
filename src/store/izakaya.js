@@ -1,4 +1,4 @@
-// import axios from '@/api/axios';
+/* eslint-disable no-console */
 
 export default {
     namespaced: true,

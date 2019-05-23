@@ -53,15 +53,24 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import Vue from 'vue'
+import VueJsonp from 'vue-jsonp'
+
+Vue.use(VueJsonp)
 
   export default {
     name: "IzakayaList",
     data () {
         return{
+            jsonData: Array,
+            hoge: ""
         }
     },
     mounted: function() {
-        // console.log(izakayaList);
+        this.getData();
+        console.log("result -> " + this.jsonData);
+        this.test();
+        console.log("hoge "+this.hoge);
     },
     computed: {
         ...mapGetters('izakaya',{
@@ -73,8 +82,22 @@ import { mapGetters, mapActions } from 'vuex';
     },
     methods: {
         ...mapActions('izakaya',{
+            getIzakayaList: 'getIzakayaList'
         }),
+        getData () {
+            console.log("start");
+            const url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=9288e7183fb5234b&small_area=X141&genre=G001&format=jsonp";
+            this.$jsonp(url).then(json => {
+              console.log(json);
+              // Success.
+              this.jsonData = json;
+            }).catch(err => {
+                // Failed.
+                console.log("failed -> " + err)
+            })
+        },
         test() {
+          this.hoge = "hoge";
         },
         pageTransition() {
         }
