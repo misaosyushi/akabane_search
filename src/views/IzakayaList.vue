@@ -92,7 +92,6 @@ Vue.use(VueJsonp)
               }
               // Success.
               this.izakayaList = json.results.shop;
-              console.log(json);
             }).catch(err => {
               // Failed.
               this.errorMessage = "データの取得に失敗しました。";
