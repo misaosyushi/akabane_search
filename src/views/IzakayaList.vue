@@ -17,8 +17,8 @@
 
             <v-list-tile
               :key="item.name"
-              :href="item.urls.pc"
               avatar
+              @click="showDetail(item.urls.pc)"
             >
               <v-list-tile-avatar size="50">
                 <img :src="item.photo.mobile.s">
@@ -76,21 +76,22 @@ Vue.use(VueJsonp)
     },
     methods: {
         fetchData () {
-            const url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=9288e7183fb5234b&small_area=X141&genre=G001&order=3&count=6&format=jsonp";
+            const url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=9288e7183fb5234b&small_area=X141&genre=G001&order=3&count=7&format=jsonp";
             this.$jsonp(url, { start: this.currentPage }).then(json => {
               // Success.
               this.izakayaList = json.results.shop;
               console.log(json.results.shop);
-              console.log(json.results.shop.length);
             }).catch(err => {
               // Failed.
               console.log("failed -> " + err)
             })
         },
         pageTransition(clickPage) {
-          console.log("clickPage:" + clickPage + ", currnt page:" + this.currentPage);
           this.currentPage = clickPage;
           this.fetchData();
+        },
+        showDetail(url) {
+          window.open(url, '_blank');
         }
     }
   }
