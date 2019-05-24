@@ -17,17 +17,16 @@
 
             <v-list-tile
               :key="item.name"
-              :href="item.url"
+              :href="item.urls.pc"
               avatar
-              @click="test"
             >
               <v-list-tile-avatar size="50">
-                <img :src="item.image">
+                <img :src="item.photo.mobile.s">
               </v-list-tile-avatar>
 
               <v-list-tile-content>
                 <v-list-tile-title v-html="item.name"></v-list-tile-title>
-                <v-list-tile-sub-title v-html="item.mobileAccess"></v-list-tile-sub-title>
+                <v-list-tile-sub-title v-html="item.mobile_access"></v-list-tile-sub-title>
                 <v-list-tile-sub-title v-html="item.catch"></v-list-tile-sub-title>
                 
               </v-list-tile-content>
@@ -40,9 +39,11 @@
         <div class="text-xs-center pt-2">
             <v-pagination
                 color="primary"
-                :value="currentPage"
+                :total-visible="maxVisibleLength"
                 :length="totalPage"
+                :value="currentPage"
                 @input="pageTransition"
+                
             />
         </div>
 
@@ -52,7 +53,6 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
 import Vue from 'vue'
 import VueJsonp from 'vue-jsonp'
 
@@ -62,44 +62,35 @@ Vue.use(VueJsonp)
     name: "IzakayaList",
     data () {
         return{
-            jsonData: Array,
-            hoge: ""
+            izakayaList: "",
+            errorMessage: "",
+            totalPage: 10,
+            maxVisibleLength: 6,
+            currentPage: 1
         }
     },
     mounted: function() {
-        this.getData();
-        console.log("result -> " + this.jsonData);
-        this.test();
-        console.log("hoge "+this.hoge);
+        this.fetchData();
     },
     computed: {
-        ...mapGetters('izakaya',{
-        errorMessage: 'errorMessage',
-        currentPage: 'currentPage',
-        totalPage: 'totalPage',
-        izakayaList: 'izakayaList'
-    })
     },
     methods: {
-        ...mapActions('izakaya',{
-            getIzakayaList: 'getIzakayaList'
-        }),
-        getData () {
-            console.log("start");
-            const url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=9288e7183fb5234b&small_area=X141&genre=G001&format=jsonp";
-            this.$jsonp(url).then(json => {
-              console.log(json);
+        fetchData () {
+            const url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=9288e7183fb5234b&small_area=X141&genre=G001&order=3&count=6&format=jsonp";
+            this.$jsonp(url, { start: this.currentPage }).then(json => {
               // Success.
-              this.jsonData = json;
+              this.izakayaList = json.results.shop;
+              console.log(json.results.shop);
+              console.log(json.results.shop.length);
             }).catch(err => {
-                // Failed.
-                console.log("failed -> " + err)
+              // Failed.
+              console.log("failed -> " + err)
             })
         },
-        test() {
-          this.hoge = "hoge";
-        },
-        pageTransition() {
+        pageTransition(clickPage) {
+          console.log("clickPage:" + clickPage + ", currnt page:" + this.currentPage);
+          this.currentPage = clickPage;
+          this.fetchData();
         }
     }
   }
