@@ -6,6 +6,10 @@
             class="no-box-shadow"
             color="background"
         >
+
+        <Message 
+          :error-message="errorMessage"
+        />
     
         <v-list three-line>
           <template v-for="(item, index) in izakayaList">
@@ -55,18 +59,23 @@
 <script>
 import Vue from 'vue'
 import VueJsonp from 'vue-jsonp'
+import Message from '@/components/Message.vue';
 
 Vue.use(VueJsonp)
 
   export default {
     name: "IzakayaList",
+    components: {
+      Message
+    },
     data () {
         return{
             izakayaList: "",
             errorMessage: "",
             totalPage: 10,
             maxVisibleLength: 6,
-            currentPage: 1
+            currentPage: 1,
+            errorMessage: ""
         }
     },
     mounted: function() {
@@ -78,12 +87,15 @@ Vue.use(VueJsonp)
         fetchData () {
             const url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=9288e7183fb5234b&small_area=X141&genre=G001&order=3&count=7&format=jsonp";
             this.$jsonp(url, { start: this.currentPage }).then(json => {
+              if(json === undefined || json.results.shop.length === 0) {
+                this.errorMessage = "検索結果が見つかりませんでした。";
+              }
               // Success.
               this.izakayaList = json.results.shop;
-              console.log(json.results.shop);
+              console.log(json);
             }).catch(err => {
               // Failed.
-              console.log("failed -> " + err)
+              this.errorMessage = "データの取得に失敗しました。";
             })
         },
         pageTransition(clickPage) {
