@@ -12,8 +12,10 @@
         />
     
         <v-list three-line>
+          <!-- <v-card class="no-box-shadow" height="50"> -->
           <template v-for="(item, index) in izakayaList">
 
+<!-- <v-card class="no-box-shadow" height="120"> -->
             <v-divider
               :key="index"
               :inset="true"
@@ -23,19 +25,25 @@
               :key="item.name"
               avatar
               @click="showDetail(item.urls.pc)"
-            >
+            >           
               <v-list-tile-avatar size="50">
                 <img :src="item.photo.mobile.s">
               </v-list-tile-avatar>
 
               <v-list-tile-content>
+                <!-- <v-card class="no-box-shadow" height="120"> -->
                 <v-list-tile-title v-html="item.name"></v-list-tile-title>
-                <v-list-tile-sub-title v-html="item.mobile_access"></v-list-tile-sub-title>
-                <v-list-tile-sub-title v-html="item.catch"></v-list-tile-sub-title>
-                
+                <v-list-tile-sub-title v-html="item.mobile_access" class="caption"></v-list-tile-sub-title>
+                <v-list-tile-sub-title v-html="item.catch" class="caption"></v-list-tile-sub-title>      
+                <!-- </v-card> -->
               </v-list-tile-content>
+            
             </v-list-tile>
+
+<!-- </v-card> -->
+
           </template>
+          <!-- </v-card> -->
         </v-list>
 
         </v-card>
@@ -75,23 +83,25 @@ Vue.use(VueJsonp)
             totalPage: 10,
             maxVisibleLength: 6,
             currentPage: 1,
-            errorMessage: ""
+            errorMessage: "",
+            perPage: 6
         }
     },
     mounted: function() {
-        this.fetchData();
+        this.fetchData(this.currentPage);
     },
     computed: {
     },
     methods: {
-        fetchData () {
-            const url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=9288e7183fb5234b&small_area=X141&genre=G001&order=3&count=7&format=jsonp";
-            this.$jsonp(url, { start: this.currentPage }).then(json => {
+        fetchData (startNum) {
+            const url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=9288e7183fb5234b&small_area=X141&genre=G001&order=3&count=6&format=jsonp";
+            this.$jsonp(url, { start: startNum }).then(json => {
               if(json === undefined || json.results.shop.length === 0) {
                 this.errorMessage = "検索結果が見つかりませんでした。";
               }
               // Success.
               this.izakayaList = json.results.shop;
+              console.log(json.results.shop);
             }).catch(err => {
               // Failed.
               this.errorMessage = "データの取得に失敗しました。";
@@ -99,7 +109,12 @@ Vue.use(VueJsonp)
         },
         pageTransition(clickPage) {
           this.currentPage = clickPage;
-          this.fetchData();
+          
+          if(this.currentPage != 1) {
+            this.fetchData( (this.currentPage - 1) * this.perPage + 1 );
+          } else {
+            this.fetchData(this.currentPage);
+          }
         },
         showDetail(url) {
           window.open(url, '_blank');
