@@ -11,7 +11,7 @@
       </v-toolbar-title>
     </v-toolbar>
 
-    <v-content>
+    <v-content class="white">
       <router-view/>
     </v-content>
   </v-app>

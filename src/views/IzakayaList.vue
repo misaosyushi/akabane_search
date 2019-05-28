@@ -4,7 +4,6 @@
         <v-flex>
         <v-card 
             class="no-box-shadow"
-            color="background"
         >
 
         <Message 
@@ -12,10 +11,8 @@
         />
     
         <v-list three-line>
-          <!-- <v-card class="no-box-shadow" height="50"> -->
           <template v-for="(item, index) in izakayaList">
 
-<!-- <v-card class="no-box-shadow" height="120"> -->
             <v-divider
               :key="index"
               :inset="true"
@@ -31,19 +28,14 @@
               </v-list-tile-avatar>
 
               <v-list-tile-content>
-                <!-- <v-card class="no-box-shadow" height="120"> -->
                 <v-list-tile-title v-html="item.name"></v-list-tile-title>
                 <v-list-tile-sub-title v-html="item.mobile_access" class="caption"></v-list-tile-sub-title>
-                <v-list-tile-sub-title v-html="item.catch" class="caption"></v-list-tile-sub-title>      
-                <!-- </v-card> -->
+                <v-list-tile-sub-title v-html="item.catch" class="caption"></v-list-tile-sub-title>  
               </v-list-tile-content>
             
             </v-list-tile>
 
-<!-- </v-card> -->
-
           </template>
-          <!-- </v-card> -->
         </v-list>
 
         </v-card>
@@ -51,11 +43,10 @@
         <div class="text-xs-center pt-2">
             <v-pagination
                 color="primary"
-                :total-visible="maxVisibleLength"
+                :total-visible="7"
                 :length="totalPage"
                 :value="currentPage"
                 @input="pageTransition"
-                
             />
         </div>
 
@@ -101,7 +92,6 @@ Vue.use(VueJsonp)
               }
               // Success.
               this.izakayaList = json.results.shop;
-              console.log(json.results.shop);
             }).catch(err => {
               // Failed.
               this.errorMessage = "データの取得に失敗しました。";
@@ -115,6 +105,7 @@ Vue.use(VueJsonp)
           } else {
             this.fetchData(this.currentPage);
           }
+          window.scrollTo(0,0);  
         },
         showDetail(url) {
           window.open(url, '_blank');
