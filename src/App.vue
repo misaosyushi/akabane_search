@@ -14,6 +14,11 @@
     <v-content class="white">
       <router-view/>
     </v-content>
+
+    <v-footer class="pa-3">
+      <v-spacer></v-spacer>
+      <div>&copy;2019</div>
+    </v-footer>
   </v-app>
 </template>
 
