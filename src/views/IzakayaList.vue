@@ -2,10 +2,26 @@
   <v-container>
     <v-layout row>
         <v-flex>
-        <v-card 
+        <v-card
             class="no-box-shadow"
         >
 
+        <v-layout
+          row
+          wrap
+          justify-center>
+          <v-flex xs6>
+            <v-select
+              v-model="selectedGenreCode"
+              :items="genreList"
+              item-text="name"
+              item-value="code"
+              label="ジャンルを選択"
+              @change="searchByGenre"
+            >
+            </v-select>
+          </v-flex>
+        </v-layout>
         <Message 
           :error-message="errorMessage"
         />
@@ -43,7 +59,7 @@
         <div class="text-xs-center pt-2">
             <v-pagination
                 color="primary"
-                :total-visible="7"
+                :total-visible="maxVisibleLength"
                 :length="totalPage"
                 :value="currentPage"
                 @input="pageTransition"
@@ -58,6 +74,7 @@
 <script>
 import Vue from 'vue'
 import VueJsonp from 'vue-jsonp'
+import { mapGetters, mapActions } from 'vuex';
 import Message from '@/components/Message.vue';
 
 Vue.use(VueJsonp)
@@ -69,29 +86,38 @@ Vue.use(VueJsonp)
     },
     data () {
         return{
+            selectedGenreCode: {},
+            resuls: "",
             izakayaList: "",
             errorMessage: "",
-            totalPage: 10,
-            maxVisibleLength: 6,
+            totalPage: 1,
+            maxVisibleLength: 7,
             currentPage: 1,
             errorMessage: "",
             perPage: 6
         }
     },
     mounted: function() {
-        this.fetchData(this.currentPage);
+        this.fetchData(this.currentPage, this.selectedGenreCode);
     },
     computed: {
+      ...mapGetters('izakaya', {
+        // TODO: ジャンルマスターをAPIでとってくること
+        genreList: "genreList"
+      })
     },
     methods: {
-        fetchData (startNum) {
-            const url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=9288e7183fb5234b&small_area=X141&genre=G001&order=3&count=6&format=jsonp";
-            this.$jsonp(url, { start: startNum }).then(json => {
+        fetchData (startNum, genreCode) {
+            const url = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=9288e7183fb5234b&small_area=X141&order=3&count=50&format=jsonp";
+            this.$jsonp(url, { genre: genreCode }).then(json => {
               if(json === undefined || json.results.shop.length === 0) {
                 this.errorMessage = "検索結果が見つかりませんでした。";
               }
               // Success.
-              this.izakayaList = json.results.shop;
+              this.totalPage = Math.ceil(json.results.shop.length / 6); // 余りは繰り上げ
+              console.log(this.totalPage);
+              this.resuls = json.results.shop;
+              this.izakayaList = json.results.shop.slice(startNum, startNum + this.perPage);
             }).catch(err => {
               // Failed.
               this.errorMessage = "データの取得に失敗しました。";
@@ -99,16 +125,18 @@ Vue.use(VueJsonp)
         },
         pageTransition(clickPage) {
           this.currentPage = clickPage;
-          
-          if(this.currentPage != 1) {
-            this.fetchData( (this.currentPage - 1) * this.perPage + 1 );
-          } else {
-            this.fetchData(this.currentPage);
-          }
+          // TODO: いちいちAPI呼びたくない
+          this.fetchData((this.currentPage -1) * this.perPage + 1, this.selectedGenreCode);
           window.scrollTo(0,0);  
         },
         showDetail(url) {
           window.open(url, '_blank');
+        },
+        searchByGenre(genreCode) {
+          this.selectedGenreCode = genreCode;
+          this.currentPage = 1;
+          this.fetchData(this.currentPage, this.selectedGenreCode);
+          console.log("debug " + this.selectedGenreCode);
         }
     }
   }

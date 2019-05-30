@@ -3,48 +3,68 @@
 export default {
     namespaced: true,
     state:{
-      errorMessage: "error!",
-      currentPage: 1,
-      totalPage: 6,
-      izakayaList: [
+      genreList: [
         {
-          id: 1
-          , name:"居酒屋ほげ"
-          , mobileAccess: "赤羽徒歩1分"
-          , image: "https://imgfp.hotp.jp/IMGH/24/91/P031912491/P031912491_100.jpg"
-          , url: "https://www.hotpepper.jp/strJ001118777/?vos=nhppalsa000016"
-          , catch: "おいしいよ！"
+          name: "居酒屋"
+          , code: "G001"
         },
         {
-          id: 2
-          , name:"居酒屋ふが"
-          , mobileAccess: "赤羽徒歩5分"
-          , image: "https://imgfp.hotp.jp/IMGH/35/72/P032723572/P032723572_100.jpg"
-          , url: "https://www.hotpepper.jp/strJ001118777/?vos=nhppalsa000016"
-          , catch: "コスパ最強！"
+          name: "ダイニングバー・バル"
+          , code: "G002"
         },
         {
-          id: 3
-          , name:"居酒屋ぴよ"
-          , mobileAccess: "赤羽徒歩10分"
-          , image: "https://imgfp.hotp.jp/IMGH/12/88/P032551288/P032551288_69.jpg"
-          , url: "https://www.hotpepper.jp/strJ001118777/?vos=nhppalsa000016"
-          , catch: "穴場だよ！"
+          name: "創作料理"
+          , code: "G003"
         },
+        {
+          name: "和食"
+          , code: "G004"
+        },
+        {
+          name: "洋食"
+          , code: "G005"
+        },
+        {
+          name: "イタリアン・フレンチ"
+          , code: "G006"
+        },
+        {
+          name: "中華"
+          , code: "G007"
+        },
+        {
+          name: "焼肉・ホルモン"
+          , code: "G008"
+        },
+        {
+          name: "韓国料理"
+          , code: "G017"
+        },
+        {
+          name: "アジア・エスニック料理"
+          , code: "G009"
+        },
+        {
+          name: "各国料理"
+          , code: "G010"
+        },
+        {
+          name: "カラオケ・パーティ"
+          , code: "G011"
+        },
+        {
+          name: "バー・カクテル"
+          , code: "G012"
+        },
+        {
+          name: "お好み焼き・もんじゃ"
+          , code: "G016"
+        }
       ],
     },
     getters:{
-      errorMessage: state => {
-        return state.errorMessage;
-      },
-      currentPage: state => {
-        return state.currentPage;
-      },
-      totalPage: state => {
-        return state.totalPage;
-      },
-      izakayaList: state => {
-        return state.izakayaList;
+      genreList: state => {
+        return state.genreList;
       },
     },
     actions:{
