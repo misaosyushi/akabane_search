@@ -117,6 +117,7 @@ Vue.use(VueJsonp)
               this.totalPage = Math.ceil(json.results.shop.length / 6); // 余りは繰り上げ
               this.resuls = json.results.shop;
               this.izakayaList = json.results.shop.slice(startNum, startNum + this.perPage);
+              window.scrollTo(0,0);
             }).catch(err => {
               // Failed.
               this.errorMessage = "データの取得に失敗しました。";
@@ -126,7 +127,6 @@ Vue.use(VueJsonp)
           this.currentPage = clickPage;
           // TODO: いちいちAPI呼びたくない
           this.fetchData((this.currentPage -1) * this.perPage + 1, this.selectedGenreCode);
-          window.scrollTo(0,0);  
         },
         showDetail(url) {
           window.open(url, '_blank');
