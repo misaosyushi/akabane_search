@@ -115,7 +115,6 @@ Vue.use(VueJsonp)
               }
               // Success.
               this.totalPage = Math.ceil(json.results.shop.length / 6); // 余りは繰り上げ
-              console.log(this.totalPage);
               this.resuls = json.results.shop;
               this.izakayaList = json.results.shop.slice(startNum, startNum + this.perPage);
             }).catch(err => {
@@ -136,7 +135,6 @@ Vue.use(VueJsonp)
           this.selectedGenreCode = genreCode;
           this.currentPage = 1;
           this.fetchData(this.currentPage, this.selectedGenreCode);
-          console.log("debug " + this.selectedGenreCode);
         }
     }
   }
