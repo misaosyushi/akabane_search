@@ -16,8 +16,12 @@
     </v-content>
 
     <v-footer class="pa-3">
-      <v-spacer></v-spacer>
       <div>&copy;2019</div>
+      <v-spacer></v-spacer>
+      <a
+        href="https://docs.google.com/forms/d/e/1FAIpQLScRFFp5RZDxxrlorxJ8UXTu0jy3inhrMcurLIPCpb7ZmCMCsQ/viewform?usp=sf_link" target=”_blank”>
+        <font size="4">★品質改善アンケートフォームはこちら★</font>
+      </a>  
     </v-footer>
   </v-app>
 </template>
