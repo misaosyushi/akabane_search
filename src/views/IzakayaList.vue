@@ -74,8 +74,10 @@
 <script>
 import Vue from 'vue'
 import VueJsonp from 'vue-jsonp'
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 import Message from '@/components/Message.vue';
+
+const PER_PAGE = 6;
 
 Vue.use(VueJsonp)
 
@@ -89,12 +91,10 @@ Vue.use(VueJsonp)
             selectedGenreCode: {},
             resuls: "",
             izakayaList: "",
-            errorMessage: "",
             totalPage: 1,
             maxVisibleLength: 7,
             currentPage: 1,
             errorMessage: "",
-            perPage: 6
         }
     },
     mounted: function() {
@@ -113,20 +113,25 @@ Vue.use(VueJsonp)
               if(json === undefined || json.results.shop.length === 0) {
                 this.errorMessage = "検索結果が見つかりませんでした。";
               }
-              // Success.
-              this.totalPage = Math.ceil(json.results.shop.length / 6); // 余りは繰り上げ
+              const totalCount = json.results.shop.length;
+              console.log(json.results);
+              if (totalCount % PER_PAGE === 1) {
+                this.totalPage = Math.floor(totalCount / PER_PAGE);
+              } else {
+                this.totalPage = Math.ceil(totalCount/ PER_PAGE);
+              }
               this.resuls = json.results.shop;
-              this.izakayaList = json.results.shop.slice(startNum, startNum + this.perPage);
+              this.izakayaList = json.results.shop.slice(startNum, startNum + PER_PAGE);
               window.scrollTo(0,0);
             }).catch(err => {
-              // Failed.
+              console.log(err);
               this.errorMessage = "データの取得に失敗しました。";
             })
         },
         pageTransition(clickPage) {
           this.currentPage = clickPage;
           // TODO: いちいちAPI呼びたくない
-          this.fetchData((this.currentPage -1) * this.perPage + 1, this.selectedGenreCode);
+          this.fetchData((this.currentPage -1) * PER_PAGE + 1, this.selectedGenreCode);
         },
         showDetail(url) {
           window.open(url, '_blank');
