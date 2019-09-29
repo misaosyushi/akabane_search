@@ -1,10 +1,13 @@
 <template>
-  <div class="center">
+  <div class="center" @click="checkDisabled">
     <v-layout
       row
       wrap
       justify-center>
-      <v-flex xs6>
+      <v-flex
+        xs6
+        @click="onClick($event)"
+      >
         <v-select
           v-model="selectedGenreCode"
           :items="genreList"
@@ -32,6 +35,7 @@
         <v-list-tile
           :key="item.name"
           avatar
+          :disabled="disabled"
           @click="showDetail(item.urls.pc)"
         >           
           <v-list-tile-avatar size="50">
@@ -85,6 +89,7 @@ Vue.use(VueJsonp)
             maxVisibleLength: 7,
             currentPage: 1,
             errorMessage: "",
+            disabled: false,
         }
     },
     mounted: function() {
@@ -127,9 +132,19 @@ Vue.use(VueJsonp)
           window.open(url, '_blank');
         },
         searchByGenre(genreCode) {
+          this.disabled = false;
           this.selectedGenreCode = genreCode;
           this.currentPage = 1;
           this.fetchData(this.currentPage, this.selectedGenreCode);
+        },
+        onClick(event) {
+          event.stopPropagation();
+          this.disabled = true;
+        },
+        checkDisabled() {
+          if (this.disabled) {
+            this.disabled = false;
+          }
         }
     }
   }
