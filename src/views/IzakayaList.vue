@@ -1,74 +1,64 @@
 <template>
-  <v-container>
-    <v-layout row>
-        <v-flex>
-        <v-card
-            class="no-box-shadow"
+  <div class="center">
+    <v-layout
+      row
+      wrap
+      justify-center>
+      <v-flex xs6>
+        <v-select
+          v-model="selectedGenreCode"
+          :items="genreList"
+          item-text="name"
+          item-value="code"
+          label="ジャンルを選択"
+          :menu-props="{ maxHeight: '460' }"
+          @change="searchByGenre"
         >
-
-        <v-layout
-          row
-          wrap
-          justify-center>
-          <v-flex xs6>
-            <v-select
-              v-model="selectedGenreCode"
-              :items="genreList"
-              item-text="name"
-              item-value="code"
-              label="ジャンルを選択"
-              @change="searchByGenre"
-            >
-            </v-select>
-          </v-flex>
-        </v-layout>
-        <Message 
-          :error-message="errorMessage"
-        />
-    
-        <v-list three-line>
-          <template v-for="(item, index) in izakayaList">
-
-            <v-divider
-              :key="index"
-              :inset="true"
-            ></v-divider>
-
-            <v-list-tile
-              :key="item.name"
-              avatar
-              @click="showDetail(item.urls.pc)"
-            >           
-              <v-list-tile-avatar size="50">
-                <img :src="item.photo.mobile.s">
-              </v-list-tile-avatar>
-
-              <v-list-tile-content>
-                <v-list-tile-title v-html="item.name"></v-list-tile-title>
-                <v-list-tile-sub-title v-html="item.mobile_access" class="caption"></v-list-tile-sub-title>
-                <v-list-tile-sub-title v-html="item.catch" class="caption"></v-list-tile-sub-title>  
-              </v-list-tile-content>
-            
-            </v-list-tile>
-
-          </template>
-        </v-list>
-
-        </v-card>
-
-        <div class="text-xs-center pt-2">
-            <v-pagination
-                color="primary"
-                :total-visible="maxVisibleLength"
-                :length="totalPage"
-                :value="currentPage"
-                @input="pageTransition"
-            />
-        </div>
-
-        </v-flex>
+        </v-select>
+      </v-flex>
     </v-layout>
-  </v-container>
+    <Message 
+      :error-message="errorMessage"
+    />
+    
+    <v-list three-line>
+      <template v-for="(item, index) in izakayaList">
+
+        <v-divider
+          :key="index"
+          :inset="true"
+        ></v-divider>
+
+        <v-list-tile
+          :key="item.name"
+          avatar
+          @click="showDetail(item.urls.pc)"
+        >           
+          <v-list-tile-avatar size="50">
+            <img :src="item.photo.mobile.s">
+          </v-list-tile-avatar>
+
+          <v-list-tile-content>
+            <v-list-tile-title v-html="item.name"></v-list-tile-title>
+            <v-list-tile-sub-title v-html="item.mobile_access" class="caption"></v-list-tile-sub-title>
+            <v-list-tile-sub-title v-html="item.catch" class="caption"></v-list-tile-sub-title>  
+          </v-list-tile-content>
+        
+        </v-list-tile>
+
+      </template>
+    </v-list>
+
+    <div class="text-xs-center">
+      <v-pagination
+          color="primary"
+          :total-visible="maxVisibleLength"
+          :length="totalPage"
+          :value="currentPage"
+          @input="pageTransition"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -146,5 +136,8 @@ Vue.use(VueJsonp)
 </script>
 
 <style>
+.center {
+  padding: 3%;
+}
 
 </style>
