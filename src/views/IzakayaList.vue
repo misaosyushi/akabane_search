@@ -1,5 +1,8 @@
 <template>
-  <div class="center" @click="checkDisabled">
+  <div
+    :class="{'mb-3': $vuetify.breakpoint.smAndDown, 'mx-5 mb-3 mt-1': $vuetify.breakpoint.mdAndUp}"
+    @click="checkDisabled"
+  >
     <v-layout
       row
       wrap
@@ -149,10 +152,3 @@ Vue.use(VueJsonp)
     }
   }
 </script>
-
-<style>
-.center {
-  padding: 3%;
-}
-
-</style>

@@ -15,12 +15,12 @@
       <router-view/>
     </v-content>
 
-    <v-footer class="pa-3">
+    <v-footer app class="pa-1">
       <div>&copy;2019</div>
       <v-spacer></v-spacer>
       <a
         href="https://docs.google.com/forms/d/e/1FAIpQLScRFFp5RZDxxrlorxJ8UXTu0jy3inhrMcurLIPCpb7ZmCMCsQ/viewform?usp=sf_link" target=”_blank”>
-        ★品質改善アンケートフォームはこちら★
+        ★品質改善アンケートフォームはこちら
       </a>  
     </v-footer>
   </v-app>
