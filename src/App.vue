@@ -16,7 +16,7 @@
     </v-content>
 
     <v-footer app class="pa-1">
-      <div>&copy;2019</div>
+      <div>&copy;misaosyushi</div>
       <v-spacer></v-spacer>
       <a
         href="https://docs.google.com/forms/d/e/1FAIpQLScRFFp5RZDxxrlorxJ8UXTu0jy3inhrMcurLIPCpb7ZmCMCsQ/viewform?usp=sf_link" target=”_blank”>
