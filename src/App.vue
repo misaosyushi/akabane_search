@@ -20,7 +20,7 @@
       <v-spacer></v-spacer>
       <a
         href="https://docs.google.com/forms/d/e/1FAIpQLScRFFp5RZDxxrlorxJ8UXTu0jy3inhrMcurLIPCpb7ZmCMCsQ/viewform?usp=sf_link" target=”_blank”>
-        ★品質改善アンケートフォームはこちら
+        ★品質改善アンケートはこちら
       </a>  
     </v-footer>
   </v-app>
