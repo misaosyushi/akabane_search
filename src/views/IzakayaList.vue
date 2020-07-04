@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="{'mb-3': $vuetify.breakpoint.smAndDown, 'mx-5 mb-3 mt-1': $vuetify.breakpoint.mdAndUp}"
+    :class="{'mb-3': $vuetify.breakpoint.smAndDown, 'main mx-auto': $vuetify.breakpoint.mdAndUp}"
     @click="checkDisabled"
   >
     <v-layout
@@ -18,15 +18,16 @@
           item-value="code"
           label="ジャンルを選択"
           :menu-props="{ maxHeight: '460' }"
+          class="select"
           @change="searchByGenre"
         >
         </v-select>
       </v-flex>
     </v-layout>
-    <Message 
+    <Message
       :error-message="errorMessage"
     />
-    
+
     <v-list three-line>
       <template v-for="(item, index) in izakayaList">
 
@@ -40,7 +41,7 @@
           avatar
           :disabled="disabled"
           @click="showDetail(item.urls.pc)"
-        >           
+        >
           <v-list-tile-avatar size="50">
             <img :src="item.photo.mobile.s">
           </v-list-tile-avatar>
@@ -48,15 +49,15 @@
           <v-list-tile-content>
             <v-list-tile-title v-html="item.name"></v-list-tile-title>
             <v-list-tile-sub-title v-html="item.mobile_access" class="caption"></v-list-tile-sub-title>
-            <v-list-tile-sub-title v-html="item.catch" class="caption"></v-list-tile-sub-title>  
+            <v-list-tile-sub-title v-html="item.catch" class="caption"></v-list-tile-sub-title>
           </v-list-tile-content>
-        
+
         </v-list-tile>
 
       </template>
     </v-list>
 
-    <div class="text-xs-center">
+    <div class="text-xs-center pagination">
       <v-pagination
           color="primary"
           :total-visible="maxVisibleLength"
@@ -74,7 +75,7 @@ import VueJsonp from 'vue-jsonp'
 import { mapGetters } from 'vuex';
 import Message from '@/components/Message.vue';
 
-const PER_PAGE = 6;
+const PER_PAGE = 20;
 
 Vue.use(VueJsonp)
 
@@ -152,3 +153,17 @@ Vue.use(VueJsonp)
     }
   }
 </script>
+
+<style>
+.main {
+  width: 800px;
+}
+
+.pagination {
+  margin-bottom: 20px;
+}
+
+.select {
+  margin-top: 10px;
+}
+</style>

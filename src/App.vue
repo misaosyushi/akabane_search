@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-toolbar 
+    <v-toolbar
       app
       color="primary"
       dark
@@ -21,7 +21,7 @@
       <a
         href="https://docs.google.com/forms/d/e/1FAIpQLScRFFp5RZDxxrlorxJ8UXTu0jy3inhrMcurLIPCpb7ZmCMCsQ/viewform?usp=sf_link" target=”_blank”>
         ★品質改善アンケートはこちら
-      </a>  
+      </a>
     </v-footer>
   </v-app>
 </template>
